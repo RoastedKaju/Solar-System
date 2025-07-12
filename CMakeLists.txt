@@ -6,3 +6,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(${PROJECT_NAME} "source/main.cpp")
+
+find_package(glfw3 CONFIG REQUIRED)
+find_package(glew REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+target_link_libraries(${PROJECT_NAME} PRIVATE GLEW::GLEW)
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
