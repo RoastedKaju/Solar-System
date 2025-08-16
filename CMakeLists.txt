@@ -5,7 +5,10 @@ project(SolarSystem LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(${PROJECT_NAME} "source/main.cpp")
+# GLOB all source files
+file(GLOB RESOURCE_FILES "source/*.cpp" "source/*.h")
+
+add_executable(${PROJECT_NAME} ${RESOURCE_FILES})
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glew REQUIRED)
