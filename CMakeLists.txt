@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 
 project(SolarSystem LANGUAGES CXX)
 
@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB RESOURCE_FILES "source/*.cpp" "source/*.h")
 
 add_executable(${PROJECT_NAME} ${RESOURCE_FILES})
+
+target_precompile_headers(${PROJECT_NAME} PRIVATE "source/PCH.h")
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glew REQUIRED)

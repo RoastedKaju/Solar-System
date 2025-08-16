@@ -1,6 +1,8 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <GLFW/glfw3.h>
+
 #include "PCH.h"
 
 namespace SOLAR
@@ -13,10 +15,10 @@ namespace SOLAR
 
 		void Init();
 		void BeginFrame();
+		void Draw();
 		void EndFrame();
 
 		void SetClearColor(float r, float g, float b, float a);
-		void Draw();
 
 	private:
 		float clearColor[4];

@@ -16,7 +16,7 @@ void SOLAR::Application::Run()
 	{
 		float deltaTime = 0.016f;
 
-		Update(deltaTime);					// Game logic
+		Update(deltaTime);					// Application logic
 		Render();							// Rendering
 
 		mainWindow->Update(deltaTime);		// Window and event handling
@@ -41,6 +41,10 @@ void SOLAR::Application::Init()
 		glfwTerminate();
 		return;
 	}
+
+	// Renderer
+	renderer = std::make_unique<Renderer>();
+
 }
 
 void SOLAR::Application::Update(float deltaTime)
@@ -50,7 +54,12 @@ void SOLAR::Application::Update(float deltaTime)
 
 void SOLAR::Application::Render()
 {
-
+	if (renderer)
+	{
+		renderer->BeginFrame();
+		renderer->Draw();
+		renderer->EndFrame();
+	}
 }
 
 void SOLAR::Application::Shutdown()

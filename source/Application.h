@@ -3,6 +3,7 @@
 
 #include "PCH.h"
 #include "Window.h"
+#include "Renderer.h"
 
 namespace SOLAR
 {
@@ -16,6 +17,7 @@ namespace SOLAR
 
 	private:
 		std::unique_ptr<Window> mainWindow;
+		std::unique_ptr<Renderer> renderer;
 
 		void Init();
 		void Update(float deltaTime);
