@@ -1,8 +1,12 @@
 #include "Application.h"
 
+#include "Shader.h"
+
 SOLAR::Application::Application()
 {
 	Init();
+
+	Shader defaultShader("resources/shaders/default.vert", "resources/shaders/default.frag");
 }
 
 SOLAR::Application::~Application()
