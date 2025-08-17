@@ -19,8 +19,11 @@ namespace SOLAR
 		std::unique_ptr<Window> mainWindow;
 		std::unique_ptr<Renderer> renderer;
 
+		double lastFrame = 0.0;
+		double deltaTime = 0.0;
+
 		void Init();
-		void Update(float deltaTime);
+		void Update();
 		void Render();
 		void Shutdown();
 	};

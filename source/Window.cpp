@@ -21,7 +21,7 @@ SOLAR::Window::~Window()
 	}
 }
 
-void SOLAR::Window::Update(float deltaTime)
+void SOLAR::Window::Update(double deltaTime)
 {
 	glfwPollEvents();
 	glfwSwapBuffers(window);

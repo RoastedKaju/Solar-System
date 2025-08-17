@@ -15,7 +15,7 @@ namespace SOLAR
 		Window(const char* title, unsigned int width, unsigned int height);
 		~Window();
 
-		void Update(float deltaTime);
+		void Update(double deltaTime);
 
 		void SetVsync(bool enabled);
 		bool IsVsync() const;
@@ -24,6 +24,7 @@ namespace SOLAR
 		inline unsigned int GetHeight() const { return height; }
 
 		inline GLFWwindow* GetNativeWindow() const { return window; }
+
 	private:
 		GLFWwindow* window;
 		std::string title;

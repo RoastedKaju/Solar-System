@@ -12,11 +12,15 @@ SOLAR::Application::~Application()
 
 void SOLAR::Application::Run()
 {
+	lastFrame = glfwGetTime();
+
 	while (!glfwWindowShouldClose(mainWindow->GetNativeWindow()))
 	{
-		float deltaTime = 0.016f;
+		const double currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 
-		Update(deltaTime);					// Application logic
+		Update();							// Application logic
 		Render();							// Rendering
 
 		mainWindow->Update(deltaTime);		// Window and event handling
@@ -47,7 +51,7 @@ void SOLAR::Application::Init()
 
 }
 
-void SOLAR::Application::Update(float deltaTime)
+void SOLAR::Application::Update()
 {
 
 }
