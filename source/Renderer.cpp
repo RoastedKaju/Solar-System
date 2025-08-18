@@ -19,6 +19,9 @@ void SOLAR::Renderer::Init()
 {
 	// Depth test
 	// Blend etc
+
+	// Shader
+	defaultShader = std::make_shared<Shader>("resources/shaders/default.vert", "resources/shaders/default.frag");
 }
 
 void SOLAR::Renderer::BeginFrame()
@@ -29,6 +32,17 @@ void SOLAR::Renderer::BeginFrame()
 
 void SOLAR::Renderer::Draw()
 {
+	if (!mainScene)
+		return;
+
+	glUseProgram(defaultShader->GetProgramId());
+
+	for (auto& mesh : mainScene->GetMeshes())
+	{
+		mesh->Bind();
+		mesh->Draw();
+		mesh->Unbind();
+	}
 
 }
 

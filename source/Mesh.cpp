@@ -15,13 +15,19 @@ SOLAR::Mesh::~Mesh()
 
 }
 
-void SOLAR::Mesh::Draw(Shader& shader)
+void SOLAR::Mesh::Draw()
 {
-	glUseProgram(shader.GetProgramId());
-
 	// Draw Mesh
-	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
+}
+
+void SOLAR::Mesh::Bind()
+{
+	glBindVertexArray(VAO);
+}
+
+void SOLAR::Mesh::Unbind()
+{
 	glBindVertexArray(0);
 }
 

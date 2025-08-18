@@ -1,6 +1,8 @@
 #ifndef MESH_H
 #define MESH_H
 
+#include <glm/glm.hpp>
+
 #include "PCH.h"
 #include "Shader.h"
 
@@ -12,7 +14,10 @@ namespace SOLAR
 		Mesh(std::vector<float> vertices, std::vector<unsigned int> indicies);
 		~Mesh();
 
-		void Draw(Shader& shader);
+		void Draw();
+
+		void Bind();
+		void Unbind();
 
 	private:
 		std::vector<float> vertices;
