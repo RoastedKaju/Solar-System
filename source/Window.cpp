@@ -63,6 +63,8 @@ void SOLAR::Window::Init()
 		return;
 	}
 
+	glewExperimental = GL_TRUE;
+
 	// Set initial viewport
 	glViewport(0, 0, width, height);
 	// Resize callback

@@ -69,6 +69,8 @@ void SOLAR::Application::Init()
 	// Scene
 	std::shared_ptr<Scene> quadScene = std::make_shared<Scene>("quadScene");
 	std::shared_ptr<Mesh> quadMesh = std::make_shared<Mesh>(debug_vertices, debug_indices);
+	
+	quadMesh->SetPosition(glm::vec3(0.0f, 0.0f, -3.0f));
 
 	quadScene->AddMesh(quadMesh);
 

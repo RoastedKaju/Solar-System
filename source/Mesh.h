@@ -25,9 +25,9 @@ namespace SOLAR
 		inline void SetRotation(const glm::vec3& rotation) { this->rotation = rotation; }
 		inline void SetScale(const glm::vec3& scale) { this->scale = scale; }
 
-		inline glm::vec3 GetPosition() const { return position; }
-		inline glm::vec3 GetRotation() const { return rotation; }
-		inline glm::vec3 GetScale() const { return scale; }
+		inline const glm::vec3& GetPosition() const { return position; }
+		inline const glm::vec3& GetRotation() const { return rotation; }
+		inline const glm::vec3& GetScale() const { return scale; }
 
 	private:
 		std::vector<float> vertices;
