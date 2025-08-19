@@ -1,5 +1,8 @@
 #include "Renderer.h"
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/euler_angles.hpp>
+
 SOLAR::Renderer::Renderer()
 {
 	clearColor[0] = 0.5f;
@@ -39,6 +42,13 @@ void SOLAR::Renderer::Draw()
 
 	for (auto& mesh : mainScene->GetMeshes())
 	{
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, mesh->GetPosition());
+		const glm::vec3 rotation = mesh->GetRotation();
+		model *= glm::eulerAngleXYZ(rotation.x, rotation.y, rotation.z);
+		model = glm::scale(model, mesh->GetScale());
+		defaultShader->SetMat4("model", model);
+
 		mesh->Bind();
 		mesh->Draw();
 		mesh->Unbind();

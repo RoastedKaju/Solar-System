@@ -5,7 +5,10 @@ SOLAR::Mesh::Mesh(std::vector<float> vertices, std::vector<unsigned int> indicie
 	indices{ indicies },
 	VAO{ 0 },
 	VBO{ 0 },
-	EBO{ 0 }
+	EBO{ 0 },
+	position{ glm::vec3(0.0f) },
+	rotation{ glm::vec3(0.0f) },
+	scale{ glm::vec3(1.0f) }
 {
 	SetupMesh();
 }

@@ -47,6 +47,16 @@ std::string SOLAR::Shader::ReadShaderFile(const char* path)
 	return std::string{};
 }
 
+GLint SOLAR::Shader::GetUniformLocation(const char* name) const
+{
+	GLint location = glGetUniformLocation(programId, name);
+
+	if (location == -1) 
+		fmt::print(fmt::fg(fmt::color::crimson), "Uniform {} Location Not Found.\n", name);
+
+	return location;
+}
+
 GLuint SOLAR::Shader::CompileShader(const char* source, GLenum type)
 {
 	GLuint shaderId = glCreateShader(type);
