@@ -39,6 +39,7 @@ namespace SOLAR
 		inline void SetYaw(float value) { yaw = value; }
 
 		void OnKeyPressed(Event& event);
+		void OnMouseMoved(Event& event);
 
 	private:
 		float fov;
@@ -57,10 +58,12 @@ namespace SOLAR
 		glm::vec3 right;
 
 		size_t KeyPressedHandle;
+		size_t MouseMovedHandle;
 
 		double deltaTime;
 
 		float cameraMoveSpeed;
+		float mouseSensitivity;
 	};
 }
 

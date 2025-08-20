@@ -16,16 +16,19 @@ SOLAR::Camera::Camera()
 
 	SetProjection(); // Initialize on creation
 
-	// Bind the key pressed event
+	// Bindings
 	KeyPressedHandle = EventDispatcher::Get().Subscribe(KeyPressedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnKeyPressed, this));
+	MouseMovedHandle = EventDispatcher::Get().Subscribe(MouseMovedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnMouseMoved, this));
 
 	deltaTime = 0.0;
 	cameraMoveSpeed = 5.0f;
+	mouseSensitivity = 0.3f;
 }
 
 SOLAR::Camera::~Camera()
 {
 	EventDispatcher::Get().Unsubscribe(KeyPressedEvent::descriptor, KeyPressedHandle);
+	EventDispatcher::Get().Unsubscribe(MouseMovedEvent::descriptor, MouseMovedHandle);
 }
 
 void SOLAR::Camera::SetProjection()
@@ -58,9 +61,9 @@ void SOLAR::Camera::OnKeyPressed(Event& event)
 {
 	if (event.GetType() == KeyPressedEvent::descriptor)
 	{
-		KeyPressedEvent& KeyEvent = static_cast<KeyPressedEvent&>(event);
+		KeyPressedEvent& keyEvent = static_cast<KeyPressedEvent&>(event);
 		
-		switch (KeyEvent.GetKeyCode())
+		switch (keyEvent.GetKeyCode())
 		{
 		case GLFW_KEY_W:
 			position += forward * cameraMoveSpeed * (float)deltaTime;
@@ -79,5 +82,25 @@ void SOLAR::Camera::OnKeyPressed(Event& event)
 		}
 
 		event.SetIsHandled(false);
+	}
+}
+
+void SOLAR::Camera::OnMouseMoved(Event& event)
+{
+	if (event.GetType() == MouseMovedEvent::descriptor)
+	{
+		MouseMovedEvent& mouseEvent = static_cast<MouseMovedEvent&>(event);
+
+		float xoffset = (float)mouseEvent.GetXPos() * mouseSensitivity;
+		float yoffset = (float)mouseEvent.GetYPos() * mouseSensitivity;
+
+		yaw += xoffset;
+		pitch += yoffset;
+
+		// Make sure that when pitch is out of bounds, screen doesn't get flipped
+		if (pitch > 89.0f)
+			pitch = 89.0f;
+		if (pitch < -89.0f)
+			pitch = -89.0f;
 	}
 }

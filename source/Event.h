@@ -61,6 +61,30 @@ namespace SOLAR
 	protected:
 		int keyCode = -1;
 	};
+
+	class MouseMovedEvent : public Event
+	{
+	public:
+		MouseMovedEvent() { debugName = "MouseMovedEvent"; }
+		MouseMovedEvent(double x, double y)
+		{
+			xpos = x;
+			ypos = y;
+			debugName = "MouseMovedEvent";
+		}
+		virtual ~MouseMovedEvent() {}
+
+		static constexpr EventType descriptor = EventType::KeyPressed;
+
+		virtual EventType GetType() const { return descriptor; }
+
+		double GetXPos() const { return xpos; }
+		double GetYPos() const { return ypos; }
+
+	protected:
+		double xpos;
+		double ypos;
+	};
 }
 
 #endif // !EVENT_H
