@@ -10,10 +10,14 @@ SOLAR::Window::Window(const char* title, unsigned int width, unsigned int height
 
 	// Vsync
 	SetVsync(vsync);
+
+	KeyPressedHandle = EventDispatcher::Get().Subscribe(KeyPressedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Window::OnKeyPressed, this));
 }
 
 SOLAR::Window::~Window()
 {
+	EventDispatcher::Get().Unsubscribe(KeyPressedEvent::descriptor, KeyPressedHandle);
+
 	if (window)
 	{
 		fmt::print(fmt::fg(fmt::color::orange), "Window Object Destoryed\n");
@@ -36,6 +40,21 @@ void SOLAR::Window::SetVsync(bool enabled)
 bool SOLAR::Window::IsVsync() const
 {
 	return vsync;
+}
+
+void SOLAR::Window::OnKeyPressed(Event& event)
+{
+	if (event.GetType() == KeyPressedEvent::descriptor)
+	{
+		KeyPressedEvent& KeyEvent = static_cast<KeyPressedEvent&>(event);
+
+		if (KeyEvent.GetKeyCode() == GLFW_KEY_ESCAPE)
+		{
+			glfwSetWindowShouldClose(window, GL_TRUE);
+		}
+
+		event.SetIsHandled(false);
+	}
 }
 
 void SOLAR::Window::Init()

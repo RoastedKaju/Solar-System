@@ -1,11 +1,14 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "PCH.h"
+#include "Event.h"
+#include "EventDispatcher.h"
 
 namespace SOLAR
 {
@@ -17,7 +20,25 @@ namespace SOLAR
 
 		void SetProjection();
 
+		const glm::mat4 GetViewMatrix() const;
+
+		void Update(double deltaTime);
+
 		inline const glm::mat4& GetProjectionMatrix() const { return projectionMat; }
+
+		inline const glm::vec3& GetPosition() const { return position; }
+		inline const glm::vec3& GetForward() const { return forward; }
+		inline const glm::vec3& GetRight() const { return right; }
+		inline const glm::vec3& GetUp() const { return up; }
+
+		inline float GetPitch() const { return pitch; }
+		inline float GetYaw() const { return yaw; }
+
+		inline void SetPosition(const glm::vec3& value) { position = value; }
+		inline void SetPitch(float value) { pitch = value; }
+		inline void SetYaw(float value) { yaw = value; }
+
+		void OnKeyPressed(Event& event);
 
 	private:
 		float fov;
@@ -27,6 +48,19 @@ namespace SOLAR
 		float farPlane;
 
 		glm::mat4 projectionMat;
+
+		glm::vec3 position;
+		float pitch;
+		float yaw;
+		glm::vec3 forward;
+		glm::vec3 up;
+		glm::vec3 right;
+
+		size_t KeyPressedHandle;
+
+		double deltaTime;
+
+		float cameraMoveSpeed;
 	};
 }
 

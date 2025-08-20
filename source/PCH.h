@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <memory>
 #include <algorithm>
+#include <functional>
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/format.h>

@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 
 #include "PCH.h"
+#include "Event.h"
+#include "EventDispatcher.h"
 
 namespace SOLAR
 {
@@ -25,6 +27,8 @@ namespace SOLAR
 
 		inline GLFWwindow* GetNativeWindow() const { return window; }
 
+		void OnKeyPressed(Event& event);
+
 	private:
 		GLFWwindow* window;
 		std::string title;
@@ -33,6 +37,8 @@ namespace SOLAR
 		bool vsync;
 
 		void Init();
+
+		size_t KeyPressedHandle;
 	};
 }
 

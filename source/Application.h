@@ -4,6 +4,7 @@
 #include "PCH.h"
 #include "Window.h"
 #include "Renderer.h"
+#include "InputProcessor.h"
 
 namespace SOLAR
 {
@@ -15,9 +16,12 @@ namespace SOLAR
 
 		void Run();
 
+		double GetDeltaTime() const { return deltaTime; }
+
 	private:
 		std::unique_ptr<Window> mainWindow;
 		std::unique_ptr<Renderer> renderer;
+		std::unique_ptr<InputProcessor> inputManager;
 
 		double lastFrame = 0.0;
 		double deltaTime = 0.0;

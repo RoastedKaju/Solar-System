@@ -18,7 +18,7 @@ namespace SOLAR
 
 		void Init();
 		void BeginFrame();
-		void Draw();
+		void Draw(double deltaTime);
 		void EndFrame();
 
 		void SetClearColor(float r, float g, float b, float a);

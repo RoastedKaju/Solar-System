@@ -34,7 +34,7 @@ void SOLAR::Renderer::BeginFrame()
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 }
 
-void SOLAR::Renderer::Draw()
+void SOLAR::Renderer::Draw(double deltaTime)
 {
 	if (!mainScene)
 		return;
@@ -46,8 +46,15 @@ void SOLAR::Renderer::Draw()
 	project = mainScene->GetCamera()->GetProjectionMatrix();
 	defaultShader->SetMat4("project", project);
 
+	// view
+	mainScene->GetCamera()->Update(deltaTime);
+	glm::mat4 view(1.0f);
+	view = mainScene->GetCamera()->GetViewMatrix();
+	defaultShader->SetMat4("view", view);
+
 	for (auto& mesh : mainScene->GetMeshes())
 	{
+		// model
 		glm::mat4 model(1.0f);
 		model = glm::translate(model, mesh->GetPosition());
 		const glm::vec3 rotation = mesh->GetRotation();
@@ -59,7 +66,6 @@ void SOLAR::Renderer::Draw()
 		mesh->Draw();
 		mesh->Unbind();
 	}
-
 }
 
 void SOLAR::Renderer::EndFrame()

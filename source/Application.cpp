@@ -53,6 +53,9 @@ void SOLAR::Application::Init()
 	// Renderer
 	renderer = std::make_unique<Renderer>();
 
+	// Input manager
+	inputManager = std::make_unique<InputProcessor>(mainWindow->GetNativeWindow());
+
 	/// Debug QUAD
 	std::vector<float> debug_vertices = {
 	 0.5f,  0.5f, 0.0f,  // top right
@@ -69,10 +72,13 @@ void SOLAR::Application::Init()
 	// Scene
 	std::shared_ptr<Scene> quadScene = std::make_shared<Scene>("quadScene");
 	std::shared_ptr<Mesh> quadMesh = std::make_shared<Mesh>(debug_vertices, debug_indices);
-	
+	std::shared_ptr<Mesh> quadMesh2 = std::make_shared<Mesh>(debug_vertices, debug_indices);
+
 	quadMesh->SetPosition(glm::vec3(0.0f, 0.0f, -3.0f));
+	quadMesh2->SetPosition(glm::vec3(3.0f, 0.0f, -3.0f));
 
 	quadScene->AddMesh(quadMesh);
+	quadScene->AddMesh(quadMesh2);
 
 	renderer->SetScene(quadScene);
 	/// Debug QUAD END
@@ -81,7 +87,10 @@ void SOLAR::Application::Init()
 
 void SOLAR::Application::Update()
 {
-
+	if (inputManager)
+	{
+		inputManager->ProcessInput(deltaTime);
+	}
 }
 
 void SOLAR::Application::Render()
@@ -89,7 +98,7 @@ void SOLAR::Application::Render()
 	if (renderer)
 	{
 		renderer->BeginFrame();
-		renderer->Draw();
+		renderer->Draw(deltaTime);
 		renderer->EndFrame();
 	}
 }
