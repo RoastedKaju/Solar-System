@@ -56,7 +56,7 @@ void SOLAR::Application::Init()
 	// Input manager
 	inputManager = std::make_unique<InputProcessor>(mainWindow->GetNativeWindow());
 
-	/// Debug QUAD
+	/// Debug BACKPACK
 	std::vector<float> debug_vertices = {
 	 0.5f,  0.5f, 0.0f,  // top right
 	 0.5f, -0.5f, 0.0f,  // bottom right
@@ -71,17 +71,13 @@ void SOLAR::Application::Init()
 
 	// Scene
 	std::shared_ptr<Scene> quadScene = std::make_shared<Scene>("quadScene");
-	std::shared_ptr<Mesh> quadMesh = std::make_shared<Mesh>(debug_vertices, debug_indices);
-	std::shared_ptr<Mesh> quadMesh2 = std::make_shared<Mesh>(debug_vertices, debug_indices);
 
-	quadMesh->SetPosition(glm::vec3(0.0f, 0.0f, -3.0f));
-	quadMesh2->SetPosition(glm::vec3(3.0f, 0.0f, -3.0f));
+	std::shared_ptr<Model> sampleModel = std::make_shared<Model>("resources/models/teapot/scene.gltf");
 
-	quadScene->AddMesh(quadMesh);
-	quadScene->AddMesh(quadMesh2);
+	quadScene->AddModel(sampleModel);
 
 	renderer->SetScene(quadScene);
-	/// Debug QUAD END
+	/// Debug BACKPACK END
 
 }
 
