@@ -63,7 +63,7 @@ void SOLAR::Renderer::Draw(double deltaTime)
 		defaultShader->SetMat4("model", model);
 
 		mesh->Bind();
-		mesh->Draw();
+		mesh->Draw(*defaultShader.get());
 		mesh->Unbind();
 	}
 }
