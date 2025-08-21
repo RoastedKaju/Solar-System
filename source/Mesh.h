@@ -10,13 +10,27 @@
 
 namespace SOLAR
 {
+	struct Vertex
+	{
+		glm::vec3 position;
+		glm::vec3 normal;
+		glm::vec2 texCoords;
+	};
+
+	struct Texture
+	{
+		unsigned int id;
+		std::string type;
+	};
+
 	class Mesh
 	{
 	public:
 		Mesh(std::vector<float> vertices, std::vector<unsigned int> indicies);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indicies, std::vector<Texture> textures);
 		~Mesh();
 
-		void Draw();
+		void Draw(Shader& shader);
 
 		void Bind();
 		void Unbind();
@@ -31,7 +45,9 @@ namespace SOLAR
 
 	private:
 		std::vector<float> vertices;
+		std::vector<Vertex> vertexList;
 		std::vector<unsigned int> indices;
+		std::vector<Texture> textures;
 
 		unsigned int VAO, VBO, EBO;
 
@@ -39,7 +55,7 @@ namespace SOLAR
 		glm::vec3 rotation;
 		glm::vec3 scale;
 
-		void SetupMesh();
+		void SetupMesh(bool primitive);
 
 	};
 }
