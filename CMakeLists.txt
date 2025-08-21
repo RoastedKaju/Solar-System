@@ -10,6 +10,8 @@ file(GLOB RESOURCE_FILES "source/*.cpp" "source/*.h")
 
 add_executable(${PROJECT_NAME} ${RESOURCE_FILES})
 
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/Vendor/Stb)
+
 target_precompile_headers(${PROJECT_NAME} PRIVATE "source/PCH.h")
 
 find_package(glfw3 CONFIG REQUIRED)
