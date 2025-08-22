@@ -5,6 +5,7 @@
 #include "Model.h"
 #include "Mesh.h"
 #include "Camera.h"
+#include "Skybox.h"
 
 namespace SOLAR
 {
@@ -21,11 +22,15 @@ namespace SOLAR
 
 		inline std::shared_ptr<Camera> GetCamera() const { return mainCamera; }
 
+		inline void SetSkybox(std::shared_ptr<Skybox> skybox) { skyboxMesh = skybox; }
+		inline std::shared_ptr<Skybox> GetSkybox() const { return skyboxMesh; }
+
 	private:
 		std::string sceneName;
 		std::shared_ptr<Camera> mainCamera;
 		std::vector<std::shared_ptr<Mesh>> meshes;
 		std::vector<std::shared_ptr<Model>> models;
+		std::shared_ptr<Skybox> skyboxMesh;
 	};
 }
 

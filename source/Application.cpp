@@ -77,6 +77,17 @@ void SOLAR::Application::Init()
 
 	quadScene->AddModel(sampleModel);
 
+	std::vector<std::string> spaceSkyboxSrc = {
+		"resources/space/right.png",
+		"resources/space/left.png",
+		"resources/space/top.png",
+		"resources/space/bottom.png",
+		"resources/space/front.png",
+		"resources/space/back.png"
+	};
+	std::shared_ptr<Skybox> solarSkybox = std::make_shared<Skybox>(spaceSkyboxSrc);
+	quadScene->SetSkybox(solarSkybox);
+
 	renderer->SetScene(quadScene);
 	/// Debug BACKPACK END
 

@@ -26,6 +26,7 @@ void SOLAR::Renderer::Init()
 
 	// Shader
 	defaultShader = std::make_shared<Shader>("resources/shaders/default.vert", "resources/shaders/default.frag");
+	skyboxShader = std::make_shared<Shader>("resources/shaders/sky.vert", "resources/shaders/sky.frag");
 }
 
 void SOLAR::Renderer::BeginFrame()
@@ -39,17 +40,36 @@ void SOLAR::Renderer::Draw(double deltaTime)
 	if (!mainScene)
 		return;
 
-	glUseProgram(defaultShader->GetProgramId());
-
 	// Projection
 	glm::mat4 project(1.0f);
 	project = mainScene->GetCamera()->GetProjectionMatrix();
-	defaultShader->SetMat4("project", project);
 
 	// view
 	mainScene->GetCamera()->Update(deltaTime);
 	glm::mat4 view(1.0f);
 	view = mainScene->GetCamera()->GetViewMatrix();
+
+	// SKYBOX
+	glUseProgram(skyboxShader->GetProgramId());
+
+	// Send projection and view matrix to skybox shader
+	skyboxShader->SetMat4("project", project);
+	skyboxShader->SetMat4("view", glm::mat4(glm::mat3(view)));
+
+	glDepthFunc(GL_LEQUAL);
+
+	const auto& skyboxMesh = mainScene->GetSkybox();
+	skyboxMesh->Bind();
+	skyboxMesh->Draw(*skyboxShader.get());
+	skyboxMesh->Unbind();
+
+	glDepthFunc(GL_LESS);
+
+	// MESHES
+	glUseProgram(defaultShader->GetProgramId());
+
+	// Send projection and view matrix to default shader
+	defaultShader->SetMat4("project", project);
 	defaultShader->SetMat4("view", view);
 
 	// Primitive meshes list

@@ -33,10 +33,10 @@ namespace SOLAR
 		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indicies, std::vector<Texture> textures);
 		~Mesh();
 
-		void Draw(Shader& shader);
+		void Draw(Shader& shader) const;
 
-		void Bind();
-		void Unbind();
+		void Bind() const;
+		void Unbind() const;
 
 		inline void SetPosition(const glm::vec3& position) { this->position = position; }
 		inline void SetRotation(const glm::vec3& rotation) { this->rotation = rotation; }

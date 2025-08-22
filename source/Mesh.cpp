@@ -29,7 +29,7 @@ SOLAR::Mesh::~Mesh()
 
 }
 
-void SOLAR::Mesh::Draw(Shader& shader)
+void SOLAR::Mesh::Draw(Shader& shader) const
 {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -62,12 +62,12 @@ void SOLAR::Mesh::Draw(Shader& shader)
 	glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
 }
 
-void SOLAR::Mesh::Bind()
+void SOLAR::Mesh::Bind() const
 {
 	glBindVertexArray(VAO);
 }
 
-void SOLAR::Mesh::Unbind()
+void SOLAR::Mesh::Unbind() const
 {
 	glBindVertexArray(0);
 }

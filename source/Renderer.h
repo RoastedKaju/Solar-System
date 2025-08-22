@@ -29,6 +29,7 @@ namespace SOLAR
 		float clearColor[4];
 
 		std::shared_ptr<Shader> defaultShader;
+		std::shared_ptr<Shader> skyboxShader;
 		std::shared_ptr<Scene> mainScene;
 	};
 }
