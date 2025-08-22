@@ -43,6 +43,8 @@ const glm::mat4 SOLAR::Camera::GetViewMatrix() const
 
 void SOLAR::Camera::Update(double deltaTime)
 {
+	//fmt::print(fmt::fg(fmt::color::antique_white), "Camera Position : {} | {} | {}    Camera Rotation : {} | {}\n", position.x, position.y, position.z, pitch, yaw);
+
 	this->deltaTime = deltaTime;
 
 	// Calculate the new Front vector from Yaw and Pitch
@@ -59,7 +61,7 @@ void SOLAR::Camera::Update(double deltaTime)
 
 void SOLAR::Camera::OnKeyPressed(Event& event)
 {
-	if (event.GetType() == KeyPressedEvent::descriptor)
+	if (event.GetType() == EventType::KeyPressed)
 	{
 		KeyPressedEvent& keyEvent = static_cast<KeyPressedEvent&>(event);
 		
@@ -87,7 +89,7 @@ void SOLAR::Camera::OnKeyPressed(Event& event)
 
 void SOLAR::Camera::OnMouseMoved(Event& event)
 {
-	if (event.GetType() == MouseMovedEvent::descriptor)
+	if (event.GetType() == EventType::MouseMoved)
 	{
 		MouseMovedEvent& mouseEvent = static_cast<MouseMovedEvent&>(event);
 
@@ -98,9 +100,8 @@ void SOLAR::Camera::OnMouseMoved(Event& event)
 		pitch += yoffset;
 
 		// Make sure that when pitch is out of bounds, screen doesn't get flipped
-		if (pitch > 89.0f)
-			pitch = 89.0f;
-		if (pitch < -89.0f)
-			pitch = -89.0f;
+		pitch = glm::clamp(pitch, -89.0f, 89.0f);
+
+		event.SetIsHandled(false);
 	}
 }

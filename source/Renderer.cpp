@@ -71,10 +71,10 @@ void SOLAR::Renderer::Draw(double deltaTime)
 	for (auto& mesh : mainScene->GetModels())
 	{
 		glm::mat4 model(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f));
-		const glm::vec3 rotation = glm::vec3(0.0f);
+		model = glm::translate(model, mesh->GetPosition());
+		const glm::vec3 rotation = mesh->GetRotation();
 		model *= glm::eulerAngleXYZ(rotation.x, rotation.y, rotation.z);
-		model = glm::scale(model, glm::vec3(1.0f));
+		model = glm::scale(model, mesh->GetScale());
 		defaultShader->SetMat4("model", model);
 
 		mesh->Draw(*defaultShader.get());	// Model's draw calls binds and unbinds the VAO inside it

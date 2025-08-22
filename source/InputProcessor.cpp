@@ -53,6 +53,7 @@ void SOLAR::InputProcessor::MouseCallback(GLFWwindow* window, double xpos, doubl
 		inputProcessor->lastx = xpos;
 		inputProcessor->lasty = ypos;
 		inputProcessor->isFirstMove = false;
+		return;
 	}
 
 	double xoffset = xpos - inputProcessor->lastx;

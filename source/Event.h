@@ -65,7 +65,7 @@ namespace SOLAR
 	class MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent() { debugName = "MouseMovedEvent"; }
+		MouseMovedEvent() { debugName = "MouseMovedEvent";}
 		MouseMovedEvent(double x, double y)
 		{
 			xpos = x;
@@ -74,7 +74,7 @@ namespace SOLAR
 		}
 		virtual ~MouseMovedEvent() {}
 
-		static constexpr EventType descriptor = EventType::KeyPressed;
+		static constexpr EventType descriptor = EventType::MouseMoved;
 
 		virtual EventType GetType() const { return descriptor; }
 
@@ -82,8 +82,8 @@ namespace SOLAR
 		double GetYPos() const { return ypos; }
 
 	protected:
-		double xpos;
-		double ypos;
+		double xpos = -90.0;
+		double ypos = 0.0;
 	};
 }
 

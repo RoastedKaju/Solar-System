@@ -73,6 +73,7 @@ void SOLAR::Application::Init()
 	std::shared_ptr<Scene> quadScene = std::make_shared<Scene>("quadScene");
 
 	std::shared_ptr<Model> sampleModel = std::make_shared<Model>("resources/models/teapot/scene.gltf");
+	sampleModel->SetPosition(glm::vec3(0.0f, 0.0f, -15.0f));
 
 	quadScene->AddModel(sampleModel);
 

@@ -23,6 +23,14 @@ namespace SOLAR
 
 		void Draw(Shader& shader);
 
+		inline void SetPosition(const glm::vec3& position) { this->position = position; }
+		inline void SetRotation(const glm::vec3& rotation) { this->rotation = rotation; }
+		inline void SetScale(const glm::vec3& scale) { this->scale = scale; }
+
+		inline const glm::vec3& GetPosition() const { return position; }
+		inline const glm::vec3& GetRotation() const { return rotation; }
+		inline const glm::vec3& GetScale() const { return scale; }
+
 	private:
 		std::vector<Mesh> meshes;
 		std::vector<Texture> texturesLoaded;
@@ -35,6 +43,10 @@ namespace SOLAR
 		glm::mat4 ConvertMatrix(const aiMatrix4x4& matrix);
 		
 		std::vector<Texture> LoadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName);
+
+		glm::vec3 position = glm::vec3(0.0f);
+		glm::vec3 rotation = glm::vec3(0.0f);
+		glm::vec3 scale = glm::vec3(1.0f);
 	};
 }
 
