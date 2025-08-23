@@ -46,6 +46,8 @@ namespace SOLAR
 		inline const glm::vec3& GetRotation() const { return rotation; }
 		inline const glm::vec3& GetScale() const { return scale; }
 
+		inline std::vector<Texture>& GetTextures() { return textures; }
+
 	private:
 		std::vector<float> vertices;
 		std::vector<Vertex> vertexList;

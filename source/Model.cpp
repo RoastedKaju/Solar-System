@@ -23,6 +23,23 @@ void SOLAR::Model::Draw(Shader& shader)
 	}
 }
 
+void SOLAR::Model::ReplaceTexture(const std::string& textureType, const std::string& texturePath)
+{
+	unsigned int newTextureID = TextureFromFile(texturePath.c_str(), this->directory);
+
+	for (auto& mesh : meshes)
+	{
+		for (auto& texture : mesh.GetTextures())
+		{
+			if (texture.type == textureType)
+			{
+				texture.id = newTextureID;
+				break; // Replace first found texture of this type
+			}
+		}
+	}
+}
+
 void SOLAR::Model::LoadModel(std::string path)
 {
 	// read file via ASSIMP
@@ -136,16 +153,6 @@ SOLAR::Mesh SOLAR::Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 
 	// return a mesh object created from the extracted mesh data
 	return Mesh(vertices, indices, textures);
-}
-
-glm::mat4 SOLAR::Model::ConvertMatrix(const aiMatrix4x4& matrix)
-{
-	return glm::mat4(
-		matrix.a1, matrix.b1, matrix.c1, matrix.d1,
-		matrix.a2, matrix.b2, matrix.c2, matrix.d2,
-		matrix.a3, matrix.b3, matrix.c3, matrix.d3,
-		matrix.a4, matrix.b4, matrix.c4, matrix.d4
-	);
 }
 
 std::vector<SOLAR::Texture> SOLAR::Model::LoadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName)
