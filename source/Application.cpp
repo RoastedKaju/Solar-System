@@ -72,9 +72,13 @@ void SOLAR::Application::Init()
 	// Scene
 	std::shared_ptr<Scene> quadScene = std::make_shared<Scene>("quadScene");
 
-	std::shared_ptr<Model> sampleModel = std::make_shared<Model>("resources/models/teapot/scene.gltf");
-	sampleModel->SetPosition(glm::vec3(0.0f, 0.0f, -15.0f));
+	std::shared_ptr<Model> moonModel = std::make_shared<Model>("resources/models/moon/Moon.gltf");
+	moonModel->SetPosition(glm::vec3(5.0f, 0.0f, -15.0f));
+	quadScene->AddModel(moonModel);
 
+	std::shared_ptr<Model> sampleModel = std::make_shared<Model>("resources/models/moon/Moon.gltf");
+	sampleModel->ReplaceTexture("texture_diffuse", "textures/2k_earth_daymap.jpg");
+	sampleModel->SetPosition(glm::vec3(0.0f, 0.0f, -15.0f));
 	quadScene->AddModel(sampleModel);
 
 	std::vector<std::string> spaceSkyboxSrc = {
