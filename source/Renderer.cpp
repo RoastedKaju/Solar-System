@@ -37,8 +37,12 @@ void SOLAR::Renderer::BeginFrame()
 
 void SOLAR::Renderer::Draw(double deltaTime)
 {
-	if (!mainScene)
+	if (!mainScene || !mainScene->GetSkybox())
+	{
+		fmt::print(fmt::fg(fmt::color::crimson), "Main Scene Or Skybox Not Valid!\n");
 		return;
+	}
+
 
 	// Projection
 	glm::mat4 project(1.0f);
@@ -49,7 +53,7 @@ void SOLAR::Renderer::Draw(double deltaTime)
 	glm::mat4 view(1.0f);
 	view = mainScene->GetCamera()->GetViewMatrix();
 
-	// SKYBOX
+	// Skybox
 	glUseProgram(skyboxShader->GetProgramId());
 
 	// Send projection and view matrix to skybox shader
@@ -65,7 +69,7 @@ void SOLAR::Renderer::Draw(double deltaTime)
 
 	glDepthFunc(GL_LESS);
 
-	// MESHES
+	// Meshes
 	glUseProgram(defaultShader->GetProgramId());
 
 	// Send projection and view matrix to default shader

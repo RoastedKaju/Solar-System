@@ -13,7 +13,7 @@ namespace SOLAR
 	{
 	public:
 		Scene(std::string sceneName);
-		~Scene() {};
+		~Scene() { fmt::print(fmt::fg(fmt::color::orange), "Scene destroyed.\n"); };
 
 		inline void AddMesh(std::shared_ptr<Mesh> mesh) { meshes.push_back(mesh); }
 		inline void AddModel(std::shared_ptr<Model> model) { models.push_back(model); }
@@ -25,12 +25,18 @@ namespace SOLAR
 		inline void SetSkybox(std::shared_ptr<Skybox> skybox) { skyboxMesh = skybox; }
 		inline std::shared_ptr<Skybox> GetSkybox() const { return skyboxMesh; }
 
+		void Update(double deltaTime);
+
 	private:
 		std::string sceneName;
 		std::shared_ptr<Camera> mainCamera;
 		std::vector<std::shared_ptr<Mesh>> meshes;
 		std::vector<std::shared_ptr<Model>> models;
 		std::shared_ptr<Skybox> skyboxMesh;
+
+		std::unordered_map<std::string, std::shared_ptr<Model>> nameToPlanetMap;
+
+		void InitSolarScene();
 	};
 }
 

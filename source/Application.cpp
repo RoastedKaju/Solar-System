@@ -70,31 +70,8 @@ void SOLAR::Application::Init()
 	};
 
 	// Scene
-	std::shared_ptr<Scene> quadScene = std::make_shared<Scene>("quadScene");
-
-	std::shared_ptr<Model> moonModel = std::make_shared<Model>("resources/models/moon/Moon.gltf");
-	moonModel->SetPosition(glm::vec3(5.0f, 0.0f, -15.0f));
-	quadScene->AddModel(moonModel);
-
-	std::shared_ptr<Model> sampleModel = std::make_shared<Model>("resources/models/moon/Moon.gltf");
-	sampleModel->ReplaceTexture("texture_diffuse", "textures/2k_earth_daymap.jpg");
-	sampleModel->SetPosition(glm::vec3(0.0f, 0.0f, -15.0f));
-	quadScene->AddModel(sampleModel);
-
-	std::vector<std::string> spaceSkyboxSrc = {
-		"resources/space/right.png",
-		"resources/space/left.png",
-		"resources/space/top.png",
-		"resources/space/bottom.png",
-		"resources/space/front.png",
-		"resources/space/back.png"
-	};
-	std::shared_ptr<Skybox> solarSkybox = std::make_shared<Skybox>(spaceSkyboxSrc);
-	quadScene->SetSkybox(solarSkybox);
-
-	renderer->SetScene(quadScene);
-	/// Debug BACKPACK END
-
+	solarScene = std::make_shared<Scene>("Solar System");
+	renderer->SetScene(solarScene);
 }
 
 void SOLAR::Application::Update()
@@ -102,6 +79,11 @@ void SOLAR::Application::Update()
 	if (inputManager)
 	{
 		inputManager->ProcessInput(deltaTime);
+	}
+
+	if (solarScene)
+	{
+		solarScene->Update(deltaTime);
 	}
 }
 

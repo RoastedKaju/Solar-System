@@ -5,9 +5,9 @@ SOLAR::Camera::Camera()
 	fov = 45.0f;
 	aspectRatio = 1280.0f / 720.0f;
 	nearPlane = 0.1f;
-	farPlane = 100.0f;
+	farPlane = 1000.0f;
 
-	position = glm::vec3(0.0f, 0.0f, 0.0f);
+	position = glm::vec3(0.0f, 0.0f, 50.0f);
 	pitch = 0.0f;
 	yaw = -90.0f;
 	forward = glm::vec3(0.0f, 0.0f, -1.0f);
