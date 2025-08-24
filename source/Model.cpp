@@ -40,6 +40,18 @@ void SOLAR::Model::ReplaceTexture(const std::string& textureType, const std::str
 	}
 }
 
+void SOLAR::Model::SetRelativePosition(const glm::vec3& position)
+{
+	if (parent)
+	{
+		this->position = parent->GetPosition() + position;
+		return;
+	}
+	
+	fmt::println("Set Relative Position called without a valid Parent.");
+	this->position = position;
+}
+
 void SOLAR::Model::LoadModel(std::string path)
 {
 	// read file via ASSIMP

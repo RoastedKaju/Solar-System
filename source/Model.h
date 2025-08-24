@@ -29,9 +29,14 @@ namespace SOLAR
 		inline void SetRotation(const glm::vec3& rotation) { this->rotation = rotation; }
 		inline void SetScale(const glm::vec3& scale) { this->scale = scale; }
 
+		void SetRelativePosition(const glm::vec3& position);
+
 		inline const glm::vec3& GetPosition() const { return position; }
 		inline const glm::vec3& GetRotation() const { return rotation; }
 		inline const glm::vec3& GetScale() const { return scale; }
+
+		inline void SetParent(std::shared_ptr<Model> newParent) { this->parent = newParent; }
+		inline std::shared_ptr<Model> GetParent() const { return parent; }
 
 	private:
 		std::vector<Mesh> meshes;
@@ -48,6 +53,8 @@ namespace SOLAR
 		glm::vec3 position = glm::vec3(0.0f);
 		glm::vec3 rotation = glm::vec3(0.0f);
 		glm::vec3 scale = glm::vec3(1.0f);
+
+		std::shared_ptr<Model> parent;
 	};
 }
 
