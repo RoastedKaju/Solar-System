@@ -36,6 +36,8 @@ namespace SOLAR
 
 		std::unordered_map<std::string, std::shared_ptr<Model>> nameToPlanetMap;
 
+		float rotationScale;
+
 		void InitSolarScene();
 	};
 }
