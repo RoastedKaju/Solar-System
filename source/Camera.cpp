@@ -21,7 +21,7 @@ SOLAR::Camera::Camera()
 	MouseMovedHandle = EventDispatcher::Get().Subscribe(MouseMovedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnMouseMoved, this));
 
 	deltaTime = 0.0;
-	cameraMoveSpeed = 5.0f;
+	cameraMoveSpeed = 20.0f;
 	mouseSensitivity = 0.3f;
 }
 

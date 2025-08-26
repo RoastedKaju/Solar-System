@@ -39,6 +39,7 @@ namespace SOLAR
 		float rotationScale;
 
 		void InitSolarScene();
+		void OribitPlanet(std::shared_ptr<Model> planet, float deltaTime);
 	};
 }
 

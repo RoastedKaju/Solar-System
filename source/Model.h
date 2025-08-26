@@ -38,6 +38,12 @@ namespace SOLAR
 		inline void SetParent(std::shared_ptr<Model> newParent) { this->parent = newParent; }
 		inline std::shared_ptr<Model> GetParent() const { return parent; }
 
+		// quick and dirty solution for planet orbits
+		float theta = 0.0f;
+		// Orbit speed in degrees per second
+		float orbitSpeed = 75.0f;
+		float orbitRadius = 50.0f;
+
 	private:
 		std::vector<Mesh> meshes;
 		std::vector<Texture> texturesLoaded;
