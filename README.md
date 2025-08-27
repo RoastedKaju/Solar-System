@@ -25,6 +25,6 @@ Solar System scene made from scratch using Modern OpenGL 3.3
 ## 🚀 Getting Started
 
 - Clone the repository along with it's submodules
-- Go to "vendor/VCPKG" and run **bootstrap-vcpkg.bat**
+- Go to `vendor/VCPKG` and run **bootstrap-vcpkg.bat**
 - Run **install_deps.bat** in the root directory
 - Generate project files or open the folder with Visual Studio.
