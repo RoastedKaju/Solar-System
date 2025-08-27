@@ -1,5 +1,9 @@
 #include "Application.h"
 
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include "Shader.h"
 #include "Mesh.h"
 #include "Scene.h"
@@ -56,18 +60,10 @@ void SOLAR::Application::Init()
 	// Input manager
 	inputManager = std::make_unique<InputProcessor>(mainWindow->GetNativeWindow());
 
-	/// Debug BACKPACK
-	std::vector<float> debug_vertices = {
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left 
-	};
-
-	std::vector<unsigned int> debug_indices = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
+	// UI
+	ImGui::CreateContext();
+	ImGui_ImplGlfw_InitForOpenGL(mainWindow->GetNativeWindow(), true);
+	ImGui_ImplOpenGL3_Init("#version 330");
 
 	// Scene
 	solarScene = std::make_shared<Scene>("Solar System");
@@ -94,11 +90,18 @@ void SOLAR::Application::Render()
 		renderer->BeginFrame();
 		renderer->Draw(deltaTime);
 		renderer->EndFrame();
+
+		renderer->DrawUI(*mainWindow->GetNativeWindow());
 	}
 }
 
 void SOLAR::Application::Shutdown()
 {
+	// UI
+	ImGui_ImplGlfw_Shutdown();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui::DestroyContext();
+
 	glfwDestroyWindow(mainWindow->GetNativeWindow());
 	glfwTerminate();
 }

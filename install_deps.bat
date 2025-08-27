@@ -13,7 +13,7 @@ if not exist %VCPKG_EXE% (
 
 REM install dependencies
 echo Installing dependencies....
-%VCPKG_EXE% install glfw3 glew fmt glm assimp
+%VCPKG_EXE% install glfw3 glew fmt glm assimp imgui[core,glfw-binding,opengl3-binding]
 
 if %errorlevel% neq 0 (
 	echo [ERROR] Installation failed.

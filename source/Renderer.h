@@ -21,6 +21,8 @@ namespace SOLAR
 		void Draw(double deltaTime);
 		void EndFrame();
 
+		void DrawUI(GLFWwindow& window);
+
 		void SetClearColor(float r, float g, float b, float a);
 
 		inline void SetScene(std::shared_ptr<Scene> scene) { mainScene = scene; }

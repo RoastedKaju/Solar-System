@@ -1,5 +1,7 @@
 #include "Renderer.h"
 
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>
 
@@ -108,6 +110,23 @@ void SOLAR::Renderer::Draw(double deltaTime)
 void SOLAR::Renderer::EndFrame()
 {
 
+}
+
+void SOLAR::Renderer::DrawUI(GLFWwindow& window)
+{
+	ImGuiIO& io = ImGui::GetIO();
+	int width, height;
+	glfwGetWindowSize(&window, &width, &height);
+	io.DisplaySize = ImVec2((float)width, (float)height);
+
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui::NewFrame();
+
+	static bool show = true;
+	ImGui::ShowDemoWindow(&show);
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void SOLAR::Renderer::SetClearColor(float r, float g, float b, float a)
