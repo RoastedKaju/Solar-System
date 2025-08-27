@@ -10,7 +10,7 @@ Solar System scene made from scratch using Modern OpenGL 3.3
 
 - Space Skybox
 - Mesh Loader
-- Replaceable textures per mesh
+- Replaceable Textures On Models
 - 9 Planets
 - Rotation and Orbits
 
