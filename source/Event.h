@@ -2,6 +2,7 @@
 #define EVENT_H
 
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 #include "PCH.h"
 
@@ -84,6 +85,54 @@ namespace SOLAR
 	protected:
 		double xpos = -90.0;
 		double ypos = 0.0;
+	};
+
+	class MousePressedEvent : public Event
+	{
+	public:
+		MousePressedEvent() { debugName = "MousePressedEvent"; }
+		MousePressedEvent(int keyCode, GLFWwindow* window)
+		{
+			this->keyCode = keyCode;
+			this->window = window;
+			debugName = "MousePressedEvent";
+		}
+		virtual ~MousePressedEvent() {}
+
+		static constexpr EventType descriptor = EventType::MouseButtonPressed;
+
+		virtual EventType GetType() const { return descriptor; }
+
+		int GetKeyCode() const { return keyCode; }
+		GLFWwindow* GetWindowPtr() const { return window; }
+
+	protected:
+		int keyCode = -1;
+		GLFWwindow* window;
+	};
+
+	class MouseReleasedEvent : public Event
+	{
+	public:
+		MouseReleasedEvent() { debugName = "MouseReleasedEvent"; }
+		MouseReleasedEvent(int keyCode, GLFWwindow* window)
+		{
+			this->keyCode = keyCode;
+			this->window = window;
+			debugName = "MouseReleasedEvent";
+		}
+		virtual ~MouseReleasedEvent() {}
+
+		static constexpr EventType descriptor = EventType::MouseButtonReleased;
+
+		virtual EventType GetType() const { return descriptor; }
+
+		int GetKeyCode() const { return keyCode; }
+		GLFWwindow* GetWindowPtr() const { return window; }
+
+	protected:
+		int keyCode = -1;
+		GLFWwindow* window;
 	};
 }
 

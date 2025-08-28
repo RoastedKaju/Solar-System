@@ -40,6 +40,10 @@ namespace SOLAR
 
 		void OnKeyPressed(Event& event);
 		void OnMouseMoved(Event& event);
+		void OnMousePressed(Event& event);
+		void OnMouseReleased(Event& event);
+
+		inline bool IsMouseHeldDown() const { return isMousePressed; }
 
 	private:
 		float fov;
@@ -59,11 +63,15 @@ namespace SOLAR
 
 		size_t KeyPressedHandle;
 		size_t MouseMovedHandle;
+		size_t MousePressedHandle;
+		size_t MouseReleasedHandle;
 
 		double deltaTime;
 
 		float cameraMoveSpeed;
 		float mouseSensitivity;
+
+		bool isMousePressed;
 	};
 }
 

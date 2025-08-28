@@ -19,6 +19,8 @@ SOLAR::Camera::Camera()
 	// Bindings
 	KeyPressedHandle = EventDispatcher::Get().Subscribe(KeyPressedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnKeyPressed, this));
 	MouseMovedHandle = EventDispatcher::Get().Subscribe(MouseMovedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnMouseMoved, this));
+	MousePressedHandle = EventDispatcher::Get().Subscribe(MousePressedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnMousePressed, this));
+	MouseReleasedHandle = EventDispatcher::Get().Subscribe(MouseReleasedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnMouseReleased, this));
 
 	deltaTime = 0.0;
 	cameraMoveSpeed = 20.0f;
@@ -29,6 +31,8 @@ SOLAR::Camera::~Camera()
 {
 	EventDispatcher::Get().Unsubscribe(KeyPressedEvent::descriptor, KeyPressedHandle);
 	EventDispatcher::Get().Unsubscribe(MouseMovedEvent::descriptor, MouseMovedHandle);
+	EventDispatcher::Get().Unsubscribe(MousePressedEvent::descriptor, MousePressedHandle);
+	EventDispatcher::Get().Unsubscribe(MouseReleasedEvent::descriptor, MouseReleasedHandle);
 }
 
 void SOLAR::Camera::SetProjection()
@@ -89,6 +93,11 @@ void SOLAR::Camera::OnKeyPressed(Event& event)
 
 void SOLAR::Camera::OnMouseMoved(Event& event)
 {
+	if (!isMousePressed)
+	{
+		return;
+	}
+
 	if (event.GetType() == EventType::MouseMoved)
 	{
 		MouseMovedEvent& mouseEvent = static_cast<MouseMovedEvent&>(event);
@@ -101,6 +110,38 @@ void SOLAR::Camera::OnMouseMoved(Event& event)
 
 		// Make sure that when pitch is out of bounds, screen doesn't get flipped
 		pitch = glm::clamp(pitch, -89.0f, 89.0f);
+
+		event.SetIsHandled(false);
+	}
+}
+
+void SOLAR::Camera::OnMousePressed(Event& event)
+{
+	if (event.GetType() == EventType::MouseButtonPressed)
+	{
+		MousePressedEvent& keyEvent = static_cast<MousePressedEvent&>(event);
+
+		if (keyEvent.GetKeyCode() == GLFW_MOUSE_BUTTON_1 && keyEvent.GetWindowPtr())
+		{
+			isMousePressed = true;
+			glfwSetInputMode(keyEvent.GetWindowPtr(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+
+		event.SetIsHandled(false);
+	}
+}
+
+void SOLAR::Camera::OnMouseReleased(Event& event)
+{
+	if (event.GetType() == EventType::MouseButtonReleased)
+	{
+		MouseReleasedEvent& keyEvent = static_cast<MouseReleasedEvent&>(event);
+
+		if (keyEvent.GetKeyCode() == GLFW_MOUSE_BUTTON_1 && keyEvent.GetWindowPtr())
+		{
+			isMousePressed = false;
+			glfwSetInputMode(keyEvent.GetWindowPtr(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
 
 		event.SetIsHandled(false);
 	}
