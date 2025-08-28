@@ -1,5 +1,7 @@
 #include "InputProcessor.h"
 
+#include <imgui.h>
+
 SOLAR::InputProcessor::InputProcessor(GLFWwindow* window)
 {
 	this->window = window;
@@ -67,13 +69,18 @@ void SOLAR::InputProcessor::MouseButtonCallback(GLFWwindow* window, int button, 
 {
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
 	{
-		// To reset the offset once we switch back to moving camera
-		InputProcessor* inputProcessor = static_cast<InputProcessor*>(glfwGetWindowUserPointer(window));
-		if (!inputProcessor)
-			return;
-		inputProcessor->isFirstMove = true;
+		// Only dispatch if the cursor is not on an imgui element
+		ImGuiIO& io = ImGui::GetIO();
+		if (!io.WantCaptureMouse)
+		{
+			// To reset the offset once we switch back to moving camera
+			InputProcessor* inputProcessor = static_cast<InputProcessor*>(glfwGetWindowUserPointer(window));
+			if (!inputProcessor)
+				return;
+			inputProcessor->isFirstMove = true;
 
-		EventDispatcher::Get().Broadcast(MousePressedEvent(GLFW_MOUSE_BUTTON_1, window));
+			EventDispatcher::Get().Broadcast(MousePressedEvent(GLFW_MOUSE_BUTTON_1, window));
+		}
 	}
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_RELEASE)
 	{

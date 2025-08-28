@@ -2,6 +2,9 @@
 
 SOLAR::Camera::Camera()
 {
+	currentCameraMode = CameraMode::FREE;
+	isMousePressed = false;
+
 	fov = 45.0f;
 	aspectRatio = 1280.0f / 720.0f;
 	nearPlane = 0.1f;

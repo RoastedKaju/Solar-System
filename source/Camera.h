@@ -12,6 +12,12 @@
 
 namespace SOLAR
 {
+	enum class CameraMode
+	{
+		FREE,
+		PLANET
+	};
+
 	class Camera
 	{
 	public:
@@ -72,6 +78,7 @@ namespace SOLAR
 		float mouseSensitivity;
 
 		bool isMousePressed;
+		CameraMode currentCameraMode;
 	};
 }
 
