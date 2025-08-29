@@ -4,6 +4,8 @@ SOLAR::Camera::Camera()
 {
 	isFreeCam = true;
 	isMousePressed = false;
+	cameraTheta = 0.0f;
+	cameraZoom = 10.0f;
 
 	fov = 45.0f;
 	aspectRatio = 1280.0f / 720.0f;
@@ -52,16 +54,21 @@ const glm::mat4 SOLAR::Camera::GetViewMatrix() const
 
 void SOLAR::Camera::Update(double deltaTime)
 {
-	//fmt::print(fmt::fg(fmt::color::antique_white), "Camera Position : {} | {} | {}    Camera Rotation : {} | {}\n", position.x, position.y, position.z, pitch, yaw);
-
 	this->deltaTime = deltaTime;
 
-	// Calculate the new Front vector from Yaw and Pitch
-	glm::vec3 new_forward;
-	new_forward.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	new_forward.y = sin(glm::radians(pitch));
-	new_forward.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	forward = glm::normalize(new_forward);
+	if (isFreeCam)
+	{
+		// Calculate the new Front vector from Yaw and Pitch
+		glm::vec3 new_forward;
+		new_forward.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+		new_forward.y = sin(glm::radians(pitch));
+		new_forward.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+		forward = glm::normalize(new_forward);
+	}
+	else
+	{
+		forward = glm::normalize(targetPosition - position);
+	}
 
 	// Re-calculate the Right and Up vectors
 	right = glm::normalize(glm::cross(forward, glm::vec3(0.0f, 1.0f, 0.0f)));
@@ -103,6 +110,7 @@ void SOLAR::Camera::OnKeyPressed(Event& event)
 
 void SOLAR::Camera::OnMouseMoved(Event& event)
 {
+	// Ignore look input if left mouse button is not pressed
 	if (!isMousePressed)
 	{
 		return;
@@ -117,6 +125,8 @@ void SOLAR::Camera::OnMouseMoved(Event& event)
 
 		yaw += xoffset;
 		pitch += yoffset;
+
+		cameraTheta += xoffset; // For lock target camera
 
 		// Make sure that when pitch is out of bounds, screen doesn't get flipped
 		pitch = glm::clamp(pitch, -89.0f, 89.0f);
@@ -166,6 +176,10 @@ void SOLAR::Camera::OnGuiButtonPressed(Event& event)
 		switch (buttonEvent.GetButtonId())
 		{
 		case 1:
+			if (isFreeCam) { std::cout << "Already In Free Cam Mode." << std::endl; break; }
+			// Calculate the pitch and yaw from forward to ensure smooth transition back to free cam
+			pitch = glm::degrees(asin(forward.y));
+			yaw = glm::degrees(atan2(forward.z, forward.x));
 			isFreeCam = true;
 			break;
 		case 2:

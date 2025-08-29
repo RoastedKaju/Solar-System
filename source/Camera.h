@@ -47,6 +47,10 @@ namespace SOLAR
 		inline bool IsMouseHeldDown() const { return isMousePressed; }
 		inline bool IsUsingFreeCam() const { return isFreeCam; }
 		inline std::string GetCameraTarget() const { return targetPlanet; }
+		inline float GetCameraZoomValue() const { return cameraZoom; }
+		inline float GetCameraThetaValue() const { return cameraTheta; }
+
+		inline void SetCameraTargetPosition(const glm::vec3& targetPos) { targetPosition = targetPos; }
 
 	private:
 		float fov;
@@ -78,6 +82,9 @@ namespace SOLAR
 		bool isMousePressed;
 		bool isFreeCam;
 		std::string targetPlanet;
+		glm::vec3 targetPosition;
+		float cameraTheta;
+		float cameraZoom;
 	};
 }
 
