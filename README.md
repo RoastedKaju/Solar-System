@@ -13,12 +13,14 @@ Solar System scene made from scratch using Modern OpenGL 3.3
 - Replaceable Textures On Models
 - 9 Planets
 - Rotation and Orbits
+- Custom Event System To Handle Communication
 
 ## 🛠️ Built With
 
 - **Language**: C++
 - **Build System**: [CMake](https://cmake.org)
 - **Third Party**: [ImGui](https://github.com/ocornut/imgui), [GLFW](https://github.com/glfw/glfw), [ASSIMP](https://github.com/assimp/assimp)
+- **Event System**: Uses My Custom [Event System](https://github.com/RoastedKaju/Event-System)
 - **Platform**: Windows
 - **Package System**: [VCPKG](https://github.com/microsoft/vcpkg)
 
