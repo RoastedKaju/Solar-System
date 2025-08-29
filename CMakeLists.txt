@@ -27,3 +27,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 target_link_libraries(${PROJECT_NAME} PRIVATE glm::glm)
 target_link_libraries(${PROJECT_NAME} PRIVATE assimp::assimp)
 target_link_libraries(${PROJECT_NAME} PRIVATE imgui::imgui)
+
+# Post build command for copying resources
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources
+						$<TARGET_FILE_DIR:${PROJECT_NAME}>/resources)
