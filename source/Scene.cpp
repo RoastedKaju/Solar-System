@@ -5,6 +5,9 @@ SOLAR::Scene::Scene(std::string sceneName)
 	this->sceneName = sceneName;
 	this->rotationScale = 0.15f;
 
+	this->cameraTheta = 45.0f;
+	this->cameraZoom = 10.0f;
+
 	// Create camera
 	mainCamera = std::make_shared<Camera>();
 
@@ -13,6 +16,17 @@ SOLAR::Scene::Scene(std::string sceneName)
 
 void SOLAR::Scene::Update(double deltaTime)
 {
+	// Camera transform
+	{
+		if (!mainCamera->IsUsingFreeCam())
+		{
+			auto& targetPlanet = nameToPlanetMap[mainCamera->GetCameraTarget()];
+			const float x = cameraZoom * cos(glm::radians(cameraTheta));
+			const float y = cameraZoom * sin(glm::radians(cameraTheta));
+			mainCamera->SetPosition(glm::vec3(x, 0.0f, y) + targetPlanet->GetPosition());
+		}
+	}
+
 	// Sun transform
 	{
 		auto& sun = nameToPlanetMap["sun"];

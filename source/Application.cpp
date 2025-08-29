@@ -61,9 +61,7 @@ void SOLAR::Application::Init()
 	inputManager = std::make_unique<InputProcessor>(mainWindow->GetNativeWindow());
 
 	// UI
-	ImGui::CreateContext();
-	ImGui_ImplGlfw_InitForOpenGL(mainWindow->GetNativeWindow(), true);
-	ImGui_ImplOpenGL3_Init("#version 330");
+	userInterface = std::make_shared<UserInterface>(mainWindow->GetNativeWindow());
 
 	// Scene
 	solarScene = std::make_shared<Scene>("Solar System");
@@ -91,17 +89,14 @@ void SOLAR::Application::Render()
 		renderer->Draw(deltaTime);
 		renderer->EndFrame();
 
-		renderer->DrawUI(*mainWindow->GetNativeWindow());
+		if (userInterface)
+		{
+			renderer->DrawUI(userInterface);
+		}
 	}
 }
 
 void SOLAR::Application::Shutdown()
 {
-	// UI
-	ImGui_ImplGlfw_Shutdown();
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui::DestroyContext();
 
-	glfwDestroyWindow(mainWindow->GetNativeWindow());
-	glfwTerminate();
 }

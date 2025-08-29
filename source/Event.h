@@ -14,7 +14,8 @@ namespace SOLAR
 	{
 		WindowResize, WindowClose, WindowMaximize, WindowMinimize,
 		MouseButtonPressed, MouseButtonReleased, MouseScrolled, MouseMoved,
-		KeyPressed, KeyReleased
+		KeyPressed, KeyReleased,
+		GuiButtonPressed
 	};
 
 	/**
@@ -66,7 +67,7 @@ namespace SOLAR
 	class MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent() { debugName = "MouseMovedEvent";}
+		MouseMovedEvent() { debugName = "MouseMovedEvent"; }
 		MouseMovedEvent(double x, double y)
 		{
 			xpos = x;
@@ -114,7 +115,7 @@ namespace SOLAR
 	class MouseReleasedEvent : public Event
 	{
 	public:
-		MouseReleasedEvent() { debugName = "MouseReleasedEvent"; }
+		MouseReleasedEvent() { debugName = "MouseReleasedEvent"; window = nullptr; }
 		MouseReleasedEvent(int keyCode, GLFWwindow* window)
 		{
 			this->keyCode = keyCode;
@@ -133,6 +134,22 @@ namespace SOLAR
 	protected:
 		int keyCode = -1;
 		GLFWwindow* window;
+	};
+
+	class GuiButtonPressedEvent : public Event
+	{
+	public:
+		GuiButtonPressedEvent() { debugName = "GuiButtonPressedEvent"; buttonId = -1; }
+		GuiButtonPressedEvent(int Id) { debugName = "GuiButtonPressedEvent"; buttonId = Id; }
+		virtual ~GuiButtonPressedEvent() {}
+
+		static constexpr EventType descriptor = EventType::GuiButtonPressed;
+
+		virtual EventType GetType() const { return descriptor; }
+
+		int GetButtonId() const { return buttonId; }
+	protected:
+		int buttonId;
 	};
 }
 

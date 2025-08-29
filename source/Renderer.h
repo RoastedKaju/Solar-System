@@ -7,6 +7,7 @@
 #include "PCH.h"
 #include "Scene.h"
 #include "Shader.h"
+#include "UserInterface.h"
 
 namespace SOLAR
 {
@@ -21,7 +22,7 @@ namespace SOLAR
 		void Draw(double deltaTime);
 		void EndFrame();
 
-		void DrawUI(GLFWwindow& window);
+		void DrawUI(std::shared_ptr<UserInterface> userInterface);
 
 		void SetClearColor(float r, float g, float b, float a);
 

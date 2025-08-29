@@ -12,12 +12,6 @@
 
 namespace SOLAR
 {
-	enum class CameraMode
-	{
-		FREE,
-		PLANET
-	};
-
 	class Camera
 	{
 	public:
@@ -48,8 +42,11 @@ namespace SOLAR
 		void OnMouseMoved(Event& event);
 		void OnMousePressed(Event& event);
 		void OnMouseReleased(Event& event);
+		void OnGuiButtonPressed(Event& event);
 
 		inline bool IsMouseHeldDown() const { return isMousePressed; }
+		inline bool IsUsingFreeCam() const { return isFreeCam; }
+		inline std::string GetCameraTarget() const { return targetPlanet; }
 
 	private:
 		float fov;
@@ -71,6 +68,7 @@ namespace SOLAR
 		size_t MouseMovedHandle;
 		size_t MousePressedHandle;
 		size_t MouseReleasedHandle;
+		size_t GuiButtonPressedHandle;
 
 		double deltaTime;
 
@@ -78,7 +76,8 @@ namespace SOLAR
 		float mouseSensitivity;
 
 		bool isMousePressed;
-		CameraMode currentCameraMode;
+		bool isFreeCam;
+		std::string targetPlanet;
 	};
 }
 

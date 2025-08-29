@@ -112,18 +112,23 @@ void SOLAR::Renderer::EndFrame()
 
 }
 
-void SOLAR::Renderer::DrawUI(GLFWwindow& window)
+void SOLAR::Renderer::DrawUI(std::shared_ptr<UserInterface> userInterface)
 {
+	if (!userInterface)
+	{
+		return;
+	}
+
 	ImGuiIO& io = ImGui::GetIO();
 	int width, height;
-	glfwGetWindowSize(&window, &width, &height);
+	glfwGetWindowSize(userInterface->GetWindow(), &width, &height);
 	io.DisplaySize = ImVec2((float)width, (float)height);
 
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui::NewFrame();
 
-	static bool show = true;
-	ImGui::ShowDemoWindow(&show);
+	userInterface->ShowHint();
+	userInterface->CameraModePicker();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

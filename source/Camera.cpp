@@ -2,7 +2,7 @@
 
 SOLAR::Camera::Camera()
 {
-	currentCameraMode = CameraMode::FREE;
+	isFreeCam = true;
 	isMousePressed = false;
 
 	fov = 45.0f;
@@ -24,6 +24,7 @@ SOLAR::Camera::Camera()
 	MouseMovedHandle = EventDispatcher::Get().Subscribe(MouseMovedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnMouseMoved, this));
 	MousePressedHandle = EventDispatcher::Get().Subscribe(MousePressedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnMousePressed, this));
 	MouseReleasedHandle = EventDispatcher::Get().Subscribe(MouseReleasedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnMouseReleased, this));
+	GuiButtonPressedHandle = EventDispatcher::Get().Subscribe(GuiButtonPressedEvent::descriptor, BIND_EVENT_FN(&SOLAR::Camera::OnGuiButtonPressed, this));
 
 	deltaTime = 0.0;
 	cameraMoveSpeed = 20.0f;
@@ -36,6 +37,7 @@ SOLAR::Camera::~Camera()
 	EventDispatcher::Get().Unsubscribe(MouseMovedEvent::descriptor, MouseMovedHandle);
 	EventDispatcher::Get().Unsubscribe(MousePressedEvent::descriptor, MousePressedHandle);
 	EventDispatcher::Get().Unsubscribe(MouseReleasedEvent::descriptor, MouseReleasedHandle);
+	EventDispatcher::Get().Unsubscribe(GuiButtonPressedEvent::descriptor, GuiButtonPressedHandle);
 }
 
 void SOLAR::Camera::SetProjection()
@@ -71,6 +73,11 @@ void SOLAR::Camera::OnKeyPressed(Event& event)
 	if (event.GetType() == EventType::KeyPressed)
 	{
 		KeyPressedEvent& keyEvent = static_cast<KeyPressedEvent&>(event);
+
+		if (!isFreeCam)
+		{
+			return;
+		}
 		
 		switch (keyEvent.GetKeyCode())
 		{
@@ -122,12 +129,12 @@ void SOLAR::Camera::OnMousePressed(Event& event)
 {
 	if (event.GetType() == EventType::MouseButtonPressed)
 	{
-		MousePressedEvent& keyEvent = static_cast<MousePressedEvent&>(event);
+		MousePressedEvent& mouseEvent = static_cast<MousePressedEvent&>(event);
 
-		if (keyEvent.GetKeyCode() == GLFW_MOUSE_BUTTON_1 && keyEvent.GetWindowPtr())
+		if (mouseEvent.GetKeyCode() == GLFW_MOUSE_BUTTON_1 && mouseEvent.GetWindowPtr())
 		{
 			isMousePressed = true;
-			glfwSetInputMode(keyEvent.GetWindowPtr(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetInputMode(mouseEvent.GetWindowPtr(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 
 		event.SetIsHandled(false);
@@ -138,12 +145,72 @@ void SOLAR::Camera::OnMouseReleased(Event& event)
 {
 	if (event.GetType() == EventType::MouseButtonReleased)
 	{
-		MouseReleasedEvent& keyEvent = static_cast<MouseReleasedEvent&>(event);
+		MouseReleasedEvent& mouseEvent = static_cast<MouseReleasedEvent&>(event);
 
-		if (keyEvent.GetKeyCode() == GLFW_MOUSE_BUTTON_1 && keyEvent.GetWindowPtr())
+		if (mouseEvent.GetKeyCode() == GLFW_MOUSE_BUTTON_1 && mouseEvent.GetWindowPtr())
 		{
 			isMousePressed = false;
-			glfwSetInputMode(keyEvent.GetWindowPtr(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			glfwSetInputMode(mouseEvent.GetWindowPtr(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+
+		event.SetIsHandled(false);
+	}
+}
+
+void SOLAR::Camera::OnGuiButtonPressed(Event& event)
+{
+	if (event.GetType() == EventType::GuiButtonPressed)
+	{
+		GuiButtonPressedEvent& buttonEvent = static_cast<GuiButtonPressedEvent&>(event);
+
+		switch (buttonEvent.GetButtonId())
+		{
+		case 1:
+			isFreeCam = true;
+			break;
+		case 2:
+			isFreeCam = false;
+			targetPlanet = "sun";
+			break;
+		case 3:
+			isFreeCam = false;
+			targetPlanet = "mercury";
+			break;
+		case 4:
+			targetPlanet = "venus";
+			isFreeCam = false;
+			break;
+		case 5:
+			targetPlanet = "earth";
+			isFreeCam = false;
+			break;
+		case 6:
+			targetPlanet = "mars";
+			isFreeCam = false;
+			break;
+		case 7:
+			targetPlanet = "jupiter";
+			isFreeCam = false;
+			break;
+		case 8:
+			targetPlanet = "saturn";
+			isFreeCam = false;
+			break;
+		case 9:
+			targetPlanet = "uranus";
+			isFreeCam = false;
+			break;
+		case 10:
+			targetPlanet = "neptune";
+			isFreeCam = false;
+			break;
+		case 11:
+			targetPlanet = "pluto";
+			isFreeCam = false;
+			break;
+
+		default:
+			break;
 		}
 
 		event.SetIsHandled(false);
